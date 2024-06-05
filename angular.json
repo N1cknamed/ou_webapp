@@ -26,9 +26,13 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/leaflet/dist/leaflet.css"
             ],
-            "scripts": [],
+            "scripts": [ 
+              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/leaflet.heat/dist/leaflet-heat.js"
+            ],
             "server": "src/main.server.ts",
             "prerender": true,
             "ssr": {

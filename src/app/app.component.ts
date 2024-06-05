@@ -6,11 +6,12 @@ import { MapComponent } from './map/map.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
+import { HeatmapComponent } from './heatmap/heatmap.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, HomeComponent, MapComponent, LoginComponent, RegisterComponent, AdminComponent],
+  imports: [RouterOutlet, RouterModule, HomeComponent, MapComponent, LoginComponent, RegisterComponent, AdminComponent, HeatmapComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
