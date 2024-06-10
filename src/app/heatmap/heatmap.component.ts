@@ -38,7 +38,7 @@ export class HeatmapComponent implements OnInit {
   private initMap(): void {
     if (isPlatformBrowser(this.platformId)) {
       import('leaflet').then(L => {
-        this.map = L.map('map').setView([52.52, 13.4050], 5); // Aangepaste view
+        this.map = L.map('map').setView([52.52, 13.4050], 6); // Aangepaste view
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; OpenStreetMap contributors'
@@ -52,13 +52,11 @@ export class HeatmapComponent implements OnInit {
   private addHeatLayer(data: WeatherData[]): void {
     if (isPlatformBrowser(this.platformId)) {
       import('leaflet').then(L => {
-        import('leaflet.heat').then((heat: any) => {
-          const heatData = data
-            .filter(point => point.temperature < 14)
-            .map(point => [point.lat, point.lng, point.rainfall]);
+        import('leaflet.heat').then(heat => {
+          const heatData = data.map(point => [point.lat, point.lng, point.rainfall] as [number, number, number]);
 
           const gradient = {
-            0.1: 'blue',
+            0.2: 'blue',
             0.4: 'cyan',
             0.6: 'lime',
             0.8: 'yellow',
@@ -66,7 +64,7 @@ export class HeatmapComponent implements OnInit {
           };
 
           if (!this.heatLayer) {
-            this.heatLayer = heat.default(heatData, { radius: 100, gradient }).addTo(this.map);
+            this.heatLayer = L.heatLayer(heatData, { radius: 100, gradient }).addTo(this.map);
           } else {
             this.heatLayer.setLatLngs(heatData);
           }
