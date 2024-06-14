@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-  url = 'apiurl'; // apiurl must change to api url
+  url = 'localhost:8000/api/weather';
   constructor(private http: HttpClient) { }
 
   getData(): Observable<any> {
@@ -12,12 +12,12 @@ export class ApiService {
   }
 
   getWindData(): Observable<any> {
-    urlWND = this.url + '/WND';
+    urlWND = this.url + '/wind';
     return this.http.get(urlWND)
   }
 
   getPrecipitationData(): Observable<any> {
-    urlPRCP = this.url + '/PRCP';
+    urlPRCP = this.url + '/rain';
     return this.http.get(urlPRCP)
   }
 }
