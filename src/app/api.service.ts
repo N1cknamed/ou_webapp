@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +14,12 @@ export class ApiService {
   }
 
   getWindData(): Observable<any> {
-    urlWND = this.url + '/wind';
+    let urlWND = this.url + '/wind';
     return this.http.get(urlWND)
   }
 
   getPrecipitationData(): Observable<any> {
-    urlPRCP = this.url + '/rain';
+    let urlPRCP = this.url + '/rain';
     return this.http.get(urlPRCP)
   }
 }
