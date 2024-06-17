@@ -6,8 +6,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideServiceWorker } from '@angular/service-worker';
 
-import { provideHttpClient } from '@angular/common/http';
-
 export const appConfig: ApplicationConfig = {
   providers: [provideHttpClient(), provideRouter(routeConfig), provideClientHydration(), provideServiceWorker('ngsw-worker.js', {
         enabled: !isDevMode(),
