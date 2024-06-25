@@ -4,6 +4,7 @@ import { WeatherService } from '../services/weather.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 interface WeatherData {
+  date: string;
   lat: number;
   lng: number;
   rainfall: number;
@@ -39,10 +40,7 @@ export class HeatmapComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.initMap();
-      this.weatherService.getWeatherData().subscribe((data: WeatherData[]) => {
-        this.weatherData = data;  
-        this.addHeatLayer(data);
-      });
+      this.loadWeatherData();
 
       this.map.on('zoomend', () => {
         if (this.map.getZoom() > 8) {
@@ -52,6 +50,25 @@ export class HeatmapComponent implements OnInit {
         }
       });
     }
+  }
+
+  private loadWeatherData(selectedDate?: string): void {
+    this.weatherService.getWeatherData().subscribe((data: WeatherData[]) => {
+      const filteredData = this.filterWeatherDataByDate(data, selectedDate);
+      this.weatherData = filteredData;  
+      this.addHeatLayer(filteredData);
+    });
+  }
+
+  private filterWeatherDataByDate(data: WeatherData[], selectedDate?: string): WeatherData[] {
+    const endDate = selectedDate ? new Date(selectedDate) : new Date();
+    const startDate = new Date(endDate);
+    startDate.setDate(endDate.getDate() - 3);
+
+    return data.filter(item => {
+      const itemDate = new Date(item.date);
+      return itemDate >= startDate && itemDate <= endDate;
+    });
   }
 
   private initMap(): void {
@@ -114,7 +131,8 @@ export class HeatmapComponent implements OnInit {
   onSubmit(): void {
     if (this.form.valid) {
       const { date, lat, lng } = this.form.value;
-      console.log(`Date: ${date}, Latitude: ${lat}, Longitude: ${lng}`);
+      this.loadWeatherData(date);
+      this.map.setView([lat, lng], 6);
       //uitbreiden als api opgezet is
     }
   }
