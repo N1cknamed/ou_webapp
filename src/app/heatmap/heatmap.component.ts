@@ -31,8 +31,8 @@ export class HeatmapComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       date: ['', Validators.required],
-      lat: ['', [Validators.required, Validators.min(-90), Validators.max(90)]],
-      lng: ['', [Validators.required, Validators.min(-180), Validators.max(180)]]
+      lat: ['', [Validators.min(-90), Validators.max(90)]],
+      lng: ['', [Validators.min(-180), Validators.max(180)]],
     });
   }
 
@@ -138,6 +138,22 @@ export class HeatmapComponent implements OnInit {
     this.markers.forEach(marker => this.map.removeLayer(marker));
     this.markers = [];
   }
+
+  downloadWeatherData(): void {
+    const selectedDate = this.form.value.date;
+    if (selectedDate) {
+      const filteredData = this.filterWeatherDataByDate(this.weatherData, selectedDate);
+      const jsonData = JSON.stringify(filteredData);
+      const blob = new Blob([jsonData], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `weather-data-${selectedDate}.json`;
+      document.body.appendChild(a); 
+      a.click();
+      document.body.removeChild(a); 
+    }
+  };
 
   onSubmit(): void {
     if (this.form.valid) {
