@@ -7,7 +7,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routeConfig), provideHttpClient(), provideClientHydration(), provideServiceWorker('ngsw-worker.js', {
+  providers: [provideHttpClient(), provideRouter(routeConfig), provideClientHydration(), provideServiceWorker('ngsw-worker.js', {
         enabled: !isDevMode(),
         registrationStrategy: 'registerWhenStable:30000'
     })]

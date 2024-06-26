@@ -74,7 +74,9 @@ export class HeatmapComponent implements OnInit {
   private initMap(): void {
     if (isPlatformBrowser(this.platformId)) {
       import('leaflet').then(L => {
-        this.map = L.map('map').setView([52.52, 13.4050], 6); // Aangepaste view
+        this.map = L.map('map', {
+          minZoom: 3,
+        }).setView([52.52, 13.4050], 6); // Aangepaste view
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; OpenStreetMap contributors'
