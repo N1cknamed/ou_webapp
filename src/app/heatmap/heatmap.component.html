@@ -1,1 +1,21 @@
-<div id="map" style="height: calc(100vh - 60px);"></div>
+<div class="container">
+    <div class="map-container" id="map"></div>
+    <div class="form-container">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div>
+          <label for="date">Datum:</label>
+          <input id="date" formControlName="date" type="date" />
+        </div>
+        <div>
+          <label for="lat">Latitude:</label>
+          <input id="lat" formControlName="lat" type="number" step="0.0001" />
+        </div>
+        <div>
+          <label for="lng">Longitude:</label>
+          <input id="lng" formControlName="lng" type="number" step="0.0001" />
+        </div>
+        <button type="submit" [disabled]="form.invalid">Zoeken</button>
+      </form>
+    </div>
+  </div>
+  
