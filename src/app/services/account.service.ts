@@ -25,11 +25,17 @@ export class AccountService {
     }
 
     login(username: string, password: string) {
-        return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { username, password })
-            .pipe(map(user => {
-                localStorage.setItem('user', JSON.stringify(user));
-                this.userSubject.next(user);
-                return user;
+        return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
+            .pipe(map(response => {
+                // Assuming the response contains accessToken and optionally refreshToken
+                localStorage.setItem('accessToken', response.accessToken);
+                if (response.refreshToken) {
+                    localStorage.setItem('refreshToken', response.refreshToken);
+                }
+                // Update userSubject with minimal user details if necessary
+                // Avoid storing sensitive information
+                this.userSubject.next({ username }); // Adjust according to your needs
+                return response;
             }));
     }
 
