@@ -5,22 +5,26 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
 import { HeatmapComponent } from './heatmap/heatmap.component';
+import { AuthGuard } from './services/auth.guard';
 
 export const routeConfig: Routes = [
     {
         path: '',
         component: HomeComponent,
-        title: 'Osaka University Weather App'
+        title: 'Osaka University Weather App',
+        canActivate: [AuthGuard]
     },
     {
         path: 'heatmap',
         component: HeatmapComponent,
-        title: 'Heatmap'
+        title: 'Heatmap',
+        canActivate: [AuthGuard]
     },
     {
         path: 'map',
         component: MapComponent,
-        title: 'Map'
+        title: 'Map',
+        canActivate: [AuthGuard]
     },
     {
         path: 'login',
@@ -30,11 +34,13 @@ export const routeConfig: Routes = [
     {
         path: 'register',
         component: RegisterComponent,
-        title: 'Register'
+        title: 'Register',
+        canActivate: [AuthGuard]
     },
     {
         path: 'admin',
         component: AdminComponent,
-        title: 'Admin'
+        title: 'Admin',
+        canActivate: [AuthGuard]
     }
 ];
