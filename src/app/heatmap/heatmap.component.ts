@@ -36,9 +36,9 @@ export class HeatmapComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
-      this.initMap();
+      await this.initMap();
       this.loadWeatherData();
 
       this.map.on('zoomend', () => {
@@ -80,9 +80,9 @@ export class HeatmapComponent implements OnInit {
     });
   }
 
-  private initMap(): void {
+  private async initMap(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
-      import('leaflet').then(L => {
+      await import('leaflet').then(L => {
         this.map = L.map('map', {
           minZoom: 3,
         }).setView([52.52, 13.4050], 6);
