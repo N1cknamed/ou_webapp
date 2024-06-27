@@ -3,7 +3,7 @@
     <div class="col">
       <input type="date" [(ngModel)]="today" (change)="getTopWindSpeeds()" class="form-control mb-3">
       <h2>Top 10 Wind Measurements for {{ today | date }}</h2>
-      <a href="#" class="btn btn-primary mb-2" (click)="downloadWindData()">Download this data</a>
+      <a class="btn btn-primary mb-2" (click)="downloadWindData()">Download this data</a>
       <ul class="list-group">
         <li *ngFor="let wind of windData; let i = index" class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
