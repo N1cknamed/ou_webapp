@@ -8,7 +8,6 @@ interface WeatherData {
   lat: number;
   lng: number;
   rainfall: number;
-  temperature: number;
 }
 
 @Component({
@@ -32,14 +31,14 @@ export class HeatmapComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       date: ['', Validators.required],
-      lat: ['', [Validators.required, Validators.min(-90), Validators.max(90)]],
-      lng: ['', [Validators.required, Validators.min(-180), Validators.max(180)]]
+      lat: ['', [Validators.min(-90), Validators.max(90)]],
+      lng: ['', [Validators.min(-180), Validators.max(180)]],
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
-      this.initMap();
+      await this.initMap();
       this.loadWeatherData();
 
       this.map.on('zoomend', () => {
@@ -53,11 +52,21 @@ export class HeatmapComponent implements OnInit {
   }
 
   private loadWeatherData(selectedDate?: string): void {
-    this.weatherService.getWeatherData().subscribe((data: WeatherData[]) => {
-      const filteredData = this.filterWeatherDataByDate(data, selectedDate);
+    this.weatherService.getWeatherData().subscribe((data: any[]) => {
+      const formattedData = this.formatWeatherData(data);
+      const filteredData = this.filterWeatherDataByDate(formattedData, selectedDate);
       this.weatherData = filteredData;  
       this.addHeatLayer(filteredData);
     });
+  }
+
+  private formatWeatherData(data: any[]): WeatherData[] {
+    return data.map(item => ({
+      date: item.DATE,
+      lat: item.latitude,
+      lng: item.longitude,
+      rainfall: item.PRCP,
+    }));
   }
 
   private filterWeatherDataByDate(data: WeatherData[], selectedDate?: string): WeatherData[] {
@@ -71,12 +80,12 @@ export class HeatmapComponent implements OnInit {
     });
   }
 
-  private initMap(): void {
+  private async initMap(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
-      import('leaflet').then(L => {
+      await import('leaflet').then(L => {
         this.map = L.map('map', {
           minZoom: 3,
-        }).setView([52.52, 13.4050], 6); // Aangepaste view
+        }).setView([52.52, 13.4050], 6);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; OpenStreetMap contributors'
@@ -130,12 +139,27 @@ export class HeatmapComponent implements OnInit {
     this.markers = [];
   }
 
+  downloadWeatherData(): void {
+    const selectedDate = this.form.value.date;
+    if (selectedDate) {
+      const filteredData = this.filterWeatherDataByDate(this.weatherData, selectedDate);
+      const jsonData = JSON.stringify(filteredData);
+      const blob = new Blob([jsonData], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `weather-data-${selectedDate}.json`;
+      document.body.appendChild(a); 
+      a.click();
+      document.body.removeChild(a); 
+    }
+  };
+
   onSubmit(): void {
     if (this.form.valid) {
       const { date, lat, lng } = this.form.value;
       this.loadWeatherData(date);
       this.map.setView([lat, lng], 6);
-      //uitbreiden als api opgezet is
     }
   }
 }

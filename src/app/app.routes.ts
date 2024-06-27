@@ -20,7 +20,7 @@ export const routeConfig: Routes = [
     {
         path: 'map',
         component: MapComponent,
-        title: 'Map'
+        title: 'Wind'
     },
     {
         path: 'login',

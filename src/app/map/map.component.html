@@ -1,87 +1,16 @@
 <div class="container">
   <div class="row">
     <div class="col">
+      <input type="date" [(ngModel)]="today" (change)="getTopWindSpeeds()" class="form-control mb-3">
       <h2>Top 10 Wind Measurements for {{ today | date }}</h2>
-      <a href="#">Download this data</a>
+      <a class="btn btn-primary mb-2" (click)="downloadWindData()">Download this data</a>
       <ul class="list-group">
-        <li class="list-group-item list-group-item-action">
+        <li *ngFor="let wind of windData; let i = index" class="list-group-item list-group-item-action">
           <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Station 1 - Location 1</h5>
-            <small class="text-body-secondary">{{ today | date:'HH:mm' }}</small>
+            <h5 class="mb-1">Station: {{wind.STN}} - {{ wind.country }} - {{ wind.city }}</h5>
+            <small class="text-body-secondary">{{ wind.TIME }}</small>
           </div>
-          <p class="mb-1">Wind Speed: <span id="windSpeed1"></span> m/s</p>
-          <small class="Small text"></small>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Station 2 - Location 2</h5>
-            <small class="text-body-secondary">{{ today | date:'HH:mm' }}</small>
-          </div>
-          <p class="mb-1">Wind Speed: <span id="windSpeed2"></span> m/s</p>
-          <small class="Small text"></small>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Station 3 - Location 3</h5>
-            <small class="text-body-secondary">{{ today | date:'HH:mm' }}</small>
-          </div>
-          <p class="mb-1">Wind Speed: <span id="windSpeed3"></span> m/s</p>
-          <small class="Small text"></small>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Station 4 - Location 4</h5>
-            <small class="text-body-secondary">{{ today | date:'HH:mm' }}</small>
-          </div>
-          <p class="mb-1">Wind Speed: <span id="windSpeed4"></span> m/s</p>
-          <small class="Small text"></small>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Station 5 - Location 5</h5>
-            <small class="text-body-secondary">{{ today | date:'HH:mm' }}</small>
-          </div>
-          <p class="mb-1">Wind Speed: <span id="windSpeed5"></span> m/s</p>
-          <small class="Small text"></small>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Station 6 - Location 6</h5>
-            <small class="text-body-secondary">{{ today | date:'HH:mm' }}</small>
-          </div>
-          <p class="mb-1">Wind Speed: <span id="windSpeed6"></span> m/s</p>
-          <small class="Small text"></small>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Station 7 - Location 7</h5>
-            <small class="text-body-secondary">{{ today | date:'HH:mm' }}</small>
-          </div>
-          <p class="mb-1">Wind Speed: <span id="windSpeed7"></span> m/s</p>
-          <small class="Small text"></small>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Station 8 - Location 8</h5>
-            <small class="text-body-secondary">{{ today | date:'HH:mm' }}</small>
-          </div>
-          <p class="mb-1">Wind Speed: <span id="windSpeed8"></span> m/s</p>
-          <small class="Small text"></small>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Station 9 - Location 9</h5>
-            <small class="text-body-secondary">{{ today | date:'HH:mm' }}</small>
-          </div>
-          <p class="mb-1">Wind Speed: <span id="windSpeed9"></span> m/s</p>
-          <small class="Small text"></small>
-        </li>
-        <li class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Station 10 - Location 10</h5>
-            <small class="text-body-secondary">{{ today | date:'HH:mm' }}</small>
-          </div>
-          <p class="mb-1">Wind Speed: <span id="windSpeed10"></span> m/s</p>
+          <p class="mb-1">Wind Speed: <span>{{ wind.WDSP }}</span> m/s</p>
           <small class="Small text"></small>
         </li>
       </ul>
