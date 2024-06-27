@@ -47,4 +47,16 @@ export class MapComponent implements OnInit {
     });
   }
 
+  downloadWindData(): void {
+    const jsonData = JSON.stringify(this.windData);
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `wind-data.json`;
+    document.body.appendChild(a); 
+    a.click();
+    document.body.removeChild(a); 
+  }
+
 }
