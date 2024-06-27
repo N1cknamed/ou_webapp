@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../api.service';
@@ -9,6 +9,9 @@ interface WindData {
   date: Date;
   lat: number;
   lng: number;
+  country: string;
+  city: string;
+  TIME: Time;
 }
 
 @Component({
