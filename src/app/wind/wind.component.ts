@@ -15,13 +15,13 @@ interface WindData {
 }
 
 @Component({
-  selector: 'app-map',
+  selector: 'app-wind',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './map.component.html',
-  styleUrl: './map.component.css'
+  templateUrl: './wind.component.html',
+  styleUrl: './wind.component.css'
 })
-export class MapComponent implements OnInit {
+export class WindComponent implements OnInit {
   today: string;
   windData: WindData[] = [];
   uniqueStationsData: WindData[] = [];
